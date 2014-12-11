@@ -102,6 +102,7 @@ function shuffle(v) {
   return v;
 }
 var deck,player,dealer;
+var busted = false;
 
 function outcome(msg,state){
   $("#outcome").text(msg).attr("class","alert alert-" + state);
@@ -139,7 +140,11 @@ $(document).ready(function(){
 
   $("#btn-hit").click(function(){
     //var card = deck.deal_card();
-    var busted = !player.hit(deck);
+    if(busted){
+      outcome("你已經死惹","danger");
+      return
+    }
+    busted = !player.hit(deck);
     console.log(card.toString());
     console.log(player.toString());
     var cardDOM = $("<div class='poker poker-"+player.cards[player.cards.length - 1].toString()+"'></div>");
