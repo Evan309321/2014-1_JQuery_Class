@@ -136,6 +136,19 @@ $(document).ready(function(){
 
   $("#player .badge").text(player.get_value());
   $("#dealer .badge").text(dealer.get_value());
+
+  $("#btn-hit").click(function(){
+    //var card = deck.deal_card();
+    var busted = !player.hit(deck);
+    console.log(card.toString());
+    console.log(player.toString());
+    var cardDOM = $("<div class='poker poker-"+player.cards[player.cards.length - 1].toString()+"'></div>");
+    console.log(cardDOM);
+    $("#player .blackjack-board").append(cardDOM);
+    $("#player .badge").text(player.get_value());
+    if(busted)
+      outcome("洗洗睡吧","danger");
+  });
 });
 // ==================================
 // 
