@@ -101,7 +101,41 @@ function shuffle(v) {
   for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
   return v;
 }
-$("#player .badge").text(player.get_value());
-$("#dealer .badge").text(dealer.get_value());
+var deck,player,dealer;
+
+function outcome(msg,state){
+  $("#outcome").text(msg).attr("class","alert alert-" + state);
+}
+
+$(document).ready(function(){
+  deck = new Deck();
+  deck.shuffle();
+  player = new Hand();
+  dealer = new Hand(true);
+
+  player.add_card(deck.deal_card());
+  dealer.add_card(deck.deal_card());
+  player.add_card(deck.deal_card());
+  dealer.add_card(deck.deal_card());
+
+  var board = $("#player .blackjack-board");
+  board.empty();
+  var cards = player.cards;
+  for(k in cards)
+    board.append($("<div class='poker poker-"+cards[k].toString()+"'></div>"));
+
+  board = $("#dealer .blackjack-board");
+  board.empty();
+  var cards = dealer.cards;
+  for(k in cards){
+    if(k == 0)
+      board.append(jQuery("<div class='poker poker-back-heartstone'></div>"));
+    else
+      board.append($("<div class='poker poker-"+cards[k].toString()+"'></div>"));
+  }
+
+  $("#player .badge").text(player.get_value());
+  $("#dealer .badge").text(dealer.get_value());
+});
 // ==================================
 // 
